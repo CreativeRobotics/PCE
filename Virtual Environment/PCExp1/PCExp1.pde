@@ -1,10 +1,4 @@
-/**
- * Objects
- * by hbarragan. 
- * 
- * Move the cursor across the image to change the speed and positions
- * of the geometry. The class MRect defines a group of lines.
- */
+//Perceptual Crossing Experiment
 
 import controlP5.*;
 import processing.serial.*;
@@ -19,23 +13,26 @@ void setup()
   colorMode(HSB);
   myFont = createFont("Courier New", 14);
   startBX = width-(10+listBoxWidth);
-
   textFont(myFont);
   cp5 = new ControlP5(this);
   portList = Serial.list();
   initialiseControls();
   
-  envWidth = 600;
-  envStart = (width/2) - (envWidth/2); //how far from the screen edge
-  envYPos = 300;
-  userA = new userObject(30, userAPos, -20, 150, 8, envWidth, envStart);
-  userA.setHue(userAHue);
-  userA.setBrightness(userBrightness, lureBrightness, staticBrightness);
-  userA.setStaticPos(150, 100);
-  userB = new userObject(40, userBPos, 20, 150, 20, envWidth, envStart);
-  userB.setHue(userBHue);
-  userB.setBrightness(userBrightness, lureBrightness, staticBrightness);
-  userB.setStaticPos(590, 20);
+  
+  
+  envWidth = 600; //environment width
+  envStart = (width/2) - (envWidth/2); //The distance from the screen edge that tne environment starts
+  envYPos = 300; //environment Y Position onscreen
+  
+  userA = new userObject(30, userAPos, -20, 150, 8, envWidth, envStart); //create user A, lure and lure offset
+  userA.setHue(userAHue);//set the colour for this user
+  userA.setBrightness(userBrightness, lureBrightness, staticBrightness);//set the brightness settings for this users display elements
+  userA.setStaticPos(150, 100);//set the position of the static object
+  userB = new userObject(40, userBPos, 20, 150, 20, envWidth, envStart); //create user B, lure and lure offset
+  userB.setHue(userBHue);//set the colour for this user
+  userB.setBrightness(userBrightness, lureBrightness, staticBrightness);//set the brightness settings for this users display elements
+  userB.setStaticPos(590, 20); //set the position of the static object
+  
   frameRate(30);
 }
  
