@@ -1,0 +1,1 @@
+The application requires the controlP5 GUI library. this is in the libraries directory and needs to be copied to your local processing libraries directory.

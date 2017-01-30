@@ -30,12 +30,12 @@ void setup()
   envYPos = 300;
   userA = new userObject(30, userAPos, -20, 150, 8, envWidth, envStart);
   userA.setHue(userAHue);
-  userA.setStaticPos(250, 30);
+  userA.setBrightness(userBrightness, lureBrightness, staticBrightness);
+  userA.setStaticPos(150, 100);
   userB = new userObject(40, userBPos, 20, 150, 20, envWidth, envStart);
   userB.setHue(userBHue);
-  userB.setStaticPos(350, 30);
-  
-  
+  userB.setBrightness(userBrightness, lureBrightness, staticBrightness);
+  userB.setStaticPos(590, 20);
   frameRate(30);
 }
  
@@ -46,7 +46,6 @@ void draw()
   background(200);
   if (mousePressed == true) {
      if (mouseButton == LEFT) userAPos = mouseX;
-     
      if (mouseButton == RIGHT) userBPos = mouseX;
   }
   //userBPos ++;//= random(-2, 2);
@@ -67,42 +66,50 @@ void draw()
 
 boolean checkUserCrossing(userObject user1, userObject user2){
   if(user1.getUserEnd() > user1.getUserStart() && user2.getUserEnd() > user2.getUserStart()){
-    //Neither user is wrapping
-    println("No Wrap");
+    //Neither user is wrapping//println("No Wrap");
     if(user1.getUserEnd() < user2.getUserStart() || user1.getUserStart() > user2.getUserEnd()) return false;
     if(user2.getUserEnd() < user1.getUserStart() || user2.getUserStart() > user1.getUserEnd()) return false;
   }
   if(user1.getUserEnd() < user1.getUserStart() && user2.getUserEnd() > user2.getUserStart()){
-    //User1 is wrapping
-    println("User1 Wrap");
+    //User1 is wrapping//println("User1 Wrap");
     if(user2.getUserStart() > user1.getUserEnd() && user2.getUserEnd() < user1.getUserStart()) return false;
   }
   if(user2.getUserEnd() < user2.getUserStart() && user1.getUserEnd() > user1.getUserStart()){
-    //User2 is wrapping
-    
-    println("User2 Wrap");
+    //User2 is wrapping//println("User2 Wrap");
     if(user1.getUserStart() > user2.getUserEnd() && user1.getUserEnd() < user2.getUserStart()) return false;
   }
-  if(user1.getUserEnd() < user1.getUserStart() && user2.getUserEnd() < user2.getUserStart()){
-    //Both are wrapping - then they are both overlapping as well
-    
-    println("Both");
-    return true;
-  }
+  //if(user1.getUserEnd() < user1.getUserStart() && user2.getUserEnd() < user2.getUserStart()) return true; //Both are wrapping - then they are both overlapping as well
   return true;
 }
+
+boolean checkLureCrossing(userObject user1, userObject user2){
+  //Returns true if user1 overlaps user 2's lure
+  if(user1.getUserEnd() > user1.getUserStart() && user2.getLureEnd() > user2.getLureStart()){
+    //Neither the user or the lure are wrapping around
+    if(user1.getUserEnd() < user2.getLureStart() || user1.getUserStart() > user2.getLureEnd()) return false;
+  }
+  if(user1.getUserEnd() < user1.getUserStart() && user2.getLureEnd() > user2.getLureStart()){
+    //User wraps but not lure
+    if(user1.getUserEnd() < user2.getLureStart() && user1.getUserStart() > user2.getLureEnd()) return false;
+  }
+  if(user1.getUserEnd() > user1.getUserStart() && user2.getLureEnd() < user2.getLureStart()){
+    //Lure wraps but not user
+    if(user1.getUserEnd() < user2.getLureStart() && user1.getUserStart() > user2.getLureEnd()) return false;
+  }
+  //if(user1.getUserEnd() < user1.getUserStart() && user2.getLureEnd() < user2.getLureStart()) return true;
+  return true;
+}
+
+
 void checkCollisions(){
-  userATouchingStatic = userA.checkSelfOverlap();
-  userBTouchingStatic = userB.checkSelfOverlap();
+  userATouchingStatic = userA.checkSelfOverlap(); //works
+  userBTouchingStatic = userB.checkSelfOverlap(); //works
   //check to see if the users are touching each other or each others lure
   //Do this first for when they are not wrapping around
-  bothUsersTouching = checkUserCrossing(userA, userB);
-  //userATouchingLure = false;
-  //userBTouchingLure = false;
-  //bothUsersTouching = false;
-  /*
-  DON'T check for overlapping agents, just check that they are NOT overlapping
-  */
+  
+  bothUsersTouching = checkUserCrossing(userA, userB); //works
+  userATouchingLure = checkLureCrossing(userA, userB); //see if A crosses B's lure
+  userBTouchingLure = checkLureCrossing(userB, userA); //see if B crosses A's lure
 }
 
 void drawCollisions(){
@@ -126,15 +133,15 @@ void drawCollissionIndicator(boolean flag1, boolean flag2, boolean flag3, int us
     yEnd = 10;
   }
   
-  if(flag1)fill(color(userHue, 150, 200));
+  if(flag1)fill(color(userHue, 150, staticBrightness)); //Static contact
   else fill(color(userHue, 10, 250));
   rect(start, yStart, indicatorWidth, yEnd);
   
-  if(flag2) fill(color(userHue, 150, 200));
+  if(flag2) fill(color(userHue, 150, lureBrightness));//Lure contact
   else      fill(color(userHue, 10, 250));
   rect(start+indicatorWidth, yStart, indicatorWidth, yEnd);
  
-  if(flag3) fill(color(userHue, 150, 200));
+  if(flag3) fill(color(userHue, 150, userBrightness));//User contact
   else fill(color(userHue, 10, 250));
   rect(start+indicatorWidth+indicatorWidth, yStart, indicatorWidth, yEnd);
 }

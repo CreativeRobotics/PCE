@@ -18,6 +18,9 @@ class userObject
   int lureOffset;
   int lureWidth;
   int hue;
+  int uBrightness = 255;
+  int lBrightness = 120;
+  int sBrightness = 180;
   color userCol; //the color of the user
   int staticPos;
   int staticWidth;
@@ -52,19 +55,27 @@ class userObject
     return wrap(lurePosition+lureWidth);
   }
   //-----------------------------------------------------------------------
+
   
   boolean checkSelfOverlap() {
     //returns true if the lure or user is on the static object
     //This does NOT work when the static object is wrapping around the environment
-    //start or end of user pos is inside static object OR start and end of static object are inside user
-    int userEnd = userPosition+userWidth;
-    int staticEnd = staticPos+staticWidth;
-    if(userPosition >= staticPos && userPosition <= staticEnd) return true;
-    if(userEnd >= staticPos && userEnd <= staticEnd) return true;
-    if(userPosition <= staticPos && userEnd >= staticEnd) return true;
-    if(userPosition >= staticPos && userEnd <= staticEnd) return true;
-    //Now do the same for the lure? ... NO
-    return false;
+    //Check to see if they are NOT overlapping
+    int userEnd = wrap(userPosition+userWidth);
+    int staticEnd = wrap(staticPos+staticWidth);
+    if(userEnd < userPosition && staticEnd > staticPos){ //handle wrapping around case for user but not static object
+      if(userPosition > staticEnd && userEnd < staticPos) return false;
+      return true;
+    }
+    if(userEnd > userPosition && staticEnd < staticPos){ //handle wrapping around case for static object but NOT user
+      if(userPosition > staticEnd && userEnd < staticPos) return false;
+      return true;
+    }
+    if(userEnd < userPosition && staticEnd < staticPos){ //handle wrapping around case for both objects
+      return true;
+    }
+    if(userPosition > staticEnd || userEnd < staticPos) return false;
+    return true;
   }
   //-----------------------------------------------------------------------
   
@@ -72,12 +83,15 @@ class userObject
     hue = newHue;
     //userCol = color(hue, 255, 150);
   }
+  void setBrightness(int ub, int lb, int sb){
+    uBrightness = ub;
+    lBrightness = lb;
+    sBrightness = sb;
+  }
   //-----------------------------------------------------------------------
   void setStaticPos(int sPos, int sWidth){
-    staticPos = sPos;
+    staticPos = wrap(sPos);
     staticWidth = sWidth;
-    
-    //staticHalfWidth = staticWidth/2;
   }
   //-----------------------------------------------------------------------
  
@@ -88,19 +102,20 @@ class userObject
   //-----------------------------------------------------------------------
  
   void display(int yPos) {
+    //brightnessDrop
     //draw on the screen using the yPos
     rectMode(CORNER);
     stroke(128);
     //rectMode(CENTER);
     stroke(0);
-    fill(color(hue, 100, 200));  // Set fill to userCol
+    fill(color(hue, 100, sBrightness));  // Set fill to userCol
     //draw the static object
     drawRectWrap(environmentStartX+staticPos, yPos, staticWidth, userHeight);
     //draw the users position
-    fill(color(hue, 255, 255));
+    fill(color(hue, 255, uBrightness));
     drawRectWrap(environmentStartX+userPosition, yPos, userWidth, userHeight);
     //draw the lure
-    fill(color(hue, 150, 200));
+    fill(color(hue, 150, lBrightness));
     drawRectWrap(environmentStartX+lurePosition, yPos, lureWidth, userHeight);
     //stroke(userCol);
     drawLineWrap(environmentStartX+userPosition+userWidth, lureOffset, yPos+(userHeight/2));

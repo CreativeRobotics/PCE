@@ -56,6 +56,9 @@ int startBY = 10;
 //virtual environment
 int userAHue = 0;
 int userBHue = 128;
+int userBrightness = 255;
+int lureBrightness = 180;
+int staticBrightness = 120;
 int userAPos = 100;
 int userBPos = 400;
 int envWidth = 600;
