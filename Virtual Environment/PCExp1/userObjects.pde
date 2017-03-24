@@ -26,6 +26,15 @@ class userObject
   int staticWidth;
   int environmentStartX; //the screen location of the start of the environment - for drawing on the screen
   
+  //remote data storage for variables from devices
+  int ElapsedTime = 0;
+  int XChange = 0;
+  int YChange = 0;
+  int buttonState = 0;
+  int LEDBrightness = 0;
+  int hapticStrength1 = 0;
+  int hapticStrength2 = 0;
+  
   //Constructor
   userObject(int uWidth, int uPos, int uHeight, int lOffset, int lWidth, int wWidth, int eOffset) { 
     worldWidth = wWidth;

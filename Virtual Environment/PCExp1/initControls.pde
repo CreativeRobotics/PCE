@@ -2,7 +2,7 @@ void initialiseControls(){
 setupLog();
 setupListBoxes();
 setupConnectButtons();
-setupSerialDisplay();
+//setupSerialDisplay();
 setupCommandButtons();
 }
 
@@ -47,33 +47,44 @@ void setupConnectButtons(){
 }
 
 void setupCommandButtons(){
-  int buttonW = 100;
-  int buttonH = 20;
+  int buttonW = 300;
+  int buttonH = 50;
   int vPos = 100;
   int vSpace = buttonH+5;
   int centreStart = (width/2)-(buttonW/2);
-  cp5.addButton("ResetTimer")
+  
+  int fSize = 15;
+     
+  /*cp5.addButton("ResetTimer")
      .setBroadcast(false)
      .setValue(0)
      .setPosition(centreStart, vPos)
      .setSize(buttonW, buttonH)     
      .setBroadcast(true)
      ;
-  vPos += vSpace;
-  cp5.addButton("StartExperiment")
+  vPos += vSpace;*/
+  cp5.addButton("StartTrial")
      .setBroadcast(false)
      .setValue(0)
      .setPosition(centreStart, vPos)
      .setSize(buttonW, buttonH)  
      .setBroadcast(true)
+     .getCaptionLabel()
+     .setFont(largeFont)
+     .toUpperCase(false)
+     .setSize(fSize)
      ;
   vPos += vSpace;
-  cp5.addButton("StopExperiment")
+  cp5.addButton("PracticeSession")
      .setBroadcast(false)
      .setValue(0)
      .setPosition(centreStart, vPos)
      .setSize(buttonW, buttonH)  
      .setBroadcast(true)
+     .getCaptionLabel()
+     .setFont(largeFont)
+     .toUpperCase(false)
+     .setSize(fSize-2)
      ;
 }
 
@@ -136,11 +147,22 @@ void ConnectAButton(boolean theFlag){
     connectPortA();
   }
   if(theFlag == false){
-    cp5.getController("ConnectBButton").setLabel("Connect");
+    cp5.getController("ConnectAButton").setLabel("Connect");
     disconnectPortA();
   }
 }
 
+void ConnectBButton(boolean theFlag){
+  if(theFlag == true) {
+    //port = new Serial(this, portName, 115200);
+    cp5.getController("ConnectBButton").setLabel("CONNECTED");
+    connectPortB();
+  }
+  if(theFlag == false){
+    cp5.getController("ConnectBButton").setLabel("Connect");
+    disconnectPortB();
+  }
+}
 
 void COMMPortA(int n) {
 //list box handler
@@ -150,4 +172,12 @@ void COMMPortA(int n) {
 void COMMPortB(int n) {
 //list box handler
    portBIndex = n;
+}
+
+public void StartTrial(int theValue){
+  trialActive = true;
+}
+
+public void PracticeSession(int theValue){
+  practiceMode = !practiceMode;
 }
