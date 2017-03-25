@@ -1,66 +1,25 @@
-void updatePractice(){
-  boolean printTimeTest = false;
-  boolean printPracticeDebugMessages = false;
-  //for general testing
-  //get the user pos, then add the change in position from the device if it has been updated
-  if(!waitingForA && serialAConnected) {
-    timeTest = System.nanoTime();
-    getStateSetMessage(1, "Manual1:" +practiceIterations);
-    if(printPracticeDebugMessages) println("Sent command to A");
-  }
-  if(!waitingForB && serialBConnected) {
-    getStateSetMessage(2, "Manual2:" + practiceIterations);
-    if(printPracticeDebugMessages) println("Sent command to B");
-  }
 
-  if(newDataFromA) {
-    if(printTimeTest){
-      print("Elapsed:");
-      println(System.nanoTime() - timeTest);
-    }
-    userAPos += userA.XChange;
-    newDataFromA = false;
-    timeoutsA = 0;
-  }
-  else timeoutsA++;
-  if(newDataFromB){
-    userBPos += userB.XChange;
-    newDataFromB = false;
-    timeoutsB = 0;
-  }
-  else timeoutsB++;
-  if(timeoutsA > 100) {
-    timeoutsA = 0;
-    waitingForA = false;
-  }
-  if(timeoutsB > 100) {
-    timeoutsB = 0;
-    waitingForB = false;
-  }
-  updateEnvironment();
-  drawGraphics();
-  stroke(0);
-  fill(0);
-  //then set any haptics
-  if(userAContact) userA.hapticStrength1 = 1023;
-  else userA.hapticStrength1 = 0;
-
-  if(userBContact) userB.hapticStrength1 = 1023;
-  else userB.hapticStrength1 = 0;
-  setHaptics(1);
-  setHaptics(2);
-  practiceIterations++;
-}
 
 void runTrial(){
   //Do everything here
   boolean printTrialDebug = false;
-
+  
   numberOfIterations = trialLengthSeconds * trialResolution;
   millisecondsBetweenSteps = 1000/trialResolution;
   timeoutsA = 0;
   timeoutsB = 0;
   trialStep = 0;
+  
+  //Setup random user positions:
+  userAPos = int(random(0, envWidth));
+  userBPos = int(random(0, envWidth));
+  userA.move(userAPos);
+  userB.move(userBPos);
+  //reset the static object positions
+  
+  userA.setStaticPos(150, 4);
+  userB.setStaticPos(450, 4);
+  
   for(int step = 0; step < numberOfIterations; step++){
     
     if(logBenchmarks) loopStartMark = System.currentTimeMillis();

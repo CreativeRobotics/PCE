@@ -4,13 +4,14 @@ setupListBoxes();
 setupConnectButtons();
 //setupSerialDisplay();
 setupCommandButtons();
+//setupPracticeButtons();
 }
 
 void setupLog(){
   int cCentre = width/2;
   int bWidth = 100;
   
-  cp5.addToggle("LogDataButton")
+  /*cp5.addToggle("LogDataButton")
      .setBroadcast(false)
      .setPosition(cCentre-(bWidth/2), startAY)
      .setSize(bWidth,30)
@@ -19,7 +20,8 @@ void setupLog(){
      .setLabel("Start Log") 
      .setLabelVisible(true)  
      .setBroadcast(true)
-     ;
+     ;*/
+     
 }
 
 void setupConnectButtons(){
@@ -49,7 +51,7 @@ void setupConnectButtons(){
 void setupCommandButtons(){
   int buttonW = 300;
   int buttonH = 50;
-  int vPos = 100;
+  int vPos = 10;
   int vSpace = buttonH+5;
   int centreStart = (width/2)-(buttonW/2);
   
@@ -63,6 +65,67 @@ void setupCommandButtons(){
      .setBroadcast(true)
      ;
   vPos += vSpace;*/
+  cp5.addButton("NoPractice")
+     .setBroadcast(false)
+     .setValue(0)
+     .setPosition(centreStart, vPos)
+     .setSize(buttonW, buttonH)  
+     .setBroadcast(true)
+     .getCaptionLabel()
+     .setFont(largeFont)
+     .toUpperCase(false)
+     .setSize(fSize)
+     ;
+   vPos += vSpace;
+  cp5.addButton("FreePractice")
+     .setBroadcast(false)
+     .setValue(0)
+     .setPosition(centreStart, vPos)
+     .setSize(buttonW, buttonH)  
+     .setBroadcast(true)
+     .getCaptionLabel()
+     .setFont(largeFont)
+     .toUpperCase(false)
+     .setSize(fSize)
+     ;
+   vPos += vSpace;
+   cp5.addButton("Practice1")
+     .setBroadcast(false)
+     .setValue(0)
+     .setPosition(centreStart, vPos)
+     .setSize(buttonW, buttonH)  
+     .setBroadcast(true)
+     .getCaptionLabel()
+     .setFont(largeFont)
+     .toUpperCase(false)
+     .setSize(fSize)
+     ;
+   vPos += vSpace;
+   cp5.addButton("Practice2")
+     .setBroadcast(false)
+     .setValue(0)
+     .setPosition(centreStart, vPos)
+     .setSize(buttonW, buttonH)  
+     .setBroadcast(true)
+     .getCaptionLabel()
+     .setFont(largeFont)
+     .toUpperCase(false)
+     .setSize(fSize)
+     ;
+   vPos += vSpace;
+   cp5.addButton("Practice3")
+     .setBroadcast(false)
+     .setValue(0)
+     .setPosition(centreStart, vPos)
+     .setSize(buttonW, buttonH)  
+     .setBroadcast(true)
+     .getCaptionLabel()
+     .setFont(largeFont)
+     .toUpperCase(false)
+     .setSize(fSize)
+     ;
+   vPos += vSpace;
+   vPos += vSpace;
   cp5.addButton("StartTrial")
      .setBroadcast(false)
      .setValue(0)
@@ -74,7 +137,7 @@ void setupCommandButtons(){
      .toUpperCase(false)
      .setSize(fSize)
      ;
-  vPos += vSpace;
+ /* vPos += vSpace;
   cp5.addButton("PracticeSession")
      .setBroadcast(false)
      .setValue(0)
@@ -85,7 +148,7 @@ void setupCommandButtons(){
      .setFont(largeFont)
      .toUpperCase(false)
      .setSize(fSize-2)
-     ;
+     ;*/
 }
 
 
@@ -129,7 +192,7 @@ void setupSerialDisplay(){
 }
 
 //button event handlers
-void LogDataButton(boolean theFlag) {
+/*void LogDataButton(boolean theFlag) {
   if(theFlag == true) {
     startLogs();
     cp5.getController("LogDataButton").setLabel("Stop Log");
@@ -138,7 +201,7 @@ void LogDataButton(boolean theFlag) {
     stopLogs();
     cp5.getController("LogDataButton").setLabel("Start Log");
   }
-}
+}*/
 
 void ConnectAButton(boolean theFlag){
   if(theFlag == true) {
@@ -176,8 +239,36 @@ void COMMPortB(int n) {
 
 public void StartTrial(int theValue){
   trialActive = true;
+  practiceIterations = 0;
+  practiceMode = 0;
 }
 
-public void PracticeSession(int theValue){
-  practiceMode = !practiceMode;
+public void FreePractice(int theValue){
+  practiceMode = 4;
+  practiceIterations = 0;
+  randomise();
+}
+public void Practice1(int theValue){
+  practiceMode = 1;
+  practiceIterations = 0;
+  randomise();
+}
+public void Practice2(int theValue){
+  practiceMode = 2;
+  practiceIterations = 0;
+  randomise();
+}
+public void Practice3(int theValue){
+  practiceMode = 3;
+  practiceIterations = 0;
+  randomise();
+}
+public void NoPractice(int theValue){
+  practiceMode = 0;
+  practiceIterations = 0;
+  userA.hapticStrength1 = 0;
+  userB.hapticStrength1 = 0;
+  setHaptics(1);
+  setHaptics(2);
+  //println("NOT");
 }

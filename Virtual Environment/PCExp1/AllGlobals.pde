@@ -1,6 +1,13 @@
 //all global variables
 boolean MOUSE_TEST_MODE = false;
-boolean practiceMode = true;
+int practiceMode = 4; //free practice
+/*Practice modes:
+0 = no practice
+1 = practice with static object
+2 = practice with slow moving object
+3 = practice with fast moving object
+4 = free practice
+*/
 int practiceIterations = 0;
 boolean debugPrintA = false;
 boolean debugPrintB = false;
@@ -120,6 +127,10 @@ int envStart = 100; //how far from the screen edge
 int envYPos = 300;
 int envHeight = 50;
 
+int movingObjectPosA = 100;
+int movingObjectPosB = 100;
+int slowSpeed = 1; //speed of moving object for practice 2 (Pixels per timestep)
+int fastSpeed = 3; //speed of moving object for practice 3
 boolean userATouchingStatic = false; //set to true of the user is touching something that should sethe haptic feedbac off
 boolean userBTouchingStatic = false;
 boolean userATouchingLure = false;

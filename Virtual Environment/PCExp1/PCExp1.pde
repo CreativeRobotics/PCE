@@ -27,7 +27,7 @@ void setup()
   
   envWidth = 600; //environment width
   envStart = (width/2) - (envWidth/2); //The distance from the screen edge that tne environment starts
-  envYPos = 300; //environment Y Position onscreen
+  envYPos = 500; //environment Y Position onscreen
   //Arguments for user constructor: user width,  user starting position,  Y offset on screen for display, lure offset, lure width, environment width, environment x position onscreen for display
   userA = new userObject(4, userAPos, -20, 150, 4, envWidth, envStart); //create user A, lure and lure offset
   userA.setHue(userAHue);//set the colour for this user
@@ -50,7 +50,7 @@ void draw()
 {
   background(200);
 
-  if(MOUSE_TEST_MODE == true){
+  /*if(MOUSE_TEST_MODE == true){
     if (mousePressed == true) {
        if (mouseButton == LEFT) userAPos = mouseX;
        if (mouseButton == RIGHT) userBPos = mouseX;
@@ -60,9 +60,25 @@ void draw()
     drawGraphics();
     stroke(0);
     fill(0);
+  }*/
+  if(practiceMode == 0){
+    //updateFreePractice();
+    //drawEnviron();
   }
-  else if(practiceMode == true){
-    updatePractice();
+  else if(practiceMode == 1){
+    updatePractice1();
+
+  }
+  else if(practiceMode == 2){
+    updatePractice2();
+
+  }
+  else if(practiceMode == 3){
+    updatePractice3();
+
+  }
+  else if(practiceMode == 4){
+    updateFreePractice();
 
   }
 
@@ -79,7 +95,7 @@ void draw()
     //runTrial only returns at the end of the trial
     trialActive = false;
     loop();
-    practiceMode = false;
+    practiceMode = 0; //no practice mode
   }
 }
 
@@ -123,7 +139,7 @@ void drawEnviron(){
     
     stroke(0);
     fill(255);  // Set fill to userCol
-    rect(envStart, 300-(envHeight/2), envWidth, envHeight );
+    rect(envStart, envYPos-(envHeight/2), envWidth, envHeight );
 }
 
 void drawGraphics(){
