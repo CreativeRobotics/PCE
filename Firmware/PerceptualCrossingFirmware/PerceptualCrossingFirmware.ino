@@ -7,6 +7,7 @@ unsigned long iterations = 0;
 
 LiquidCrystalFast lcd(LCDRS, LCDRW, LCDEN, LCD4, LCD5, LCD6, LCD7);
 
+bool trialActive = 0;
 void setup() {
   analogWriteResolution(10);
   analogWriteFrequency(H1PWMPIN, HPWMFreq);
@@ -55,8 +56,8 @@ void updateSystem(){
   //haptic2.update();
   buttonState = checkSwitch();
   updateBeep();
-  if(buttonState) userLED_ON();
-  else  userLED_OFF();
+  if(buttonState && trialActive) userLED_ON();
+  else if(!buttonState && trialActive)  userLED_OFF();
   
 }
 
@@ -66,6 +67,10 @@ void waitFor(unsigned long delayTime){
 }
 
 void startTrial(){
+  userLED_ON();
+  beepX(500);
+  userLED_OFF();
+  trialActive = 1;
   hapticRate1 = 0;
   hapticRate2 = 0;
   dataSendTimer = 0;
@@ -77,12 +82,18 @@ void startTrial(){
 
 void stopTrial(){
   //stopTrackerball();
-  beep(500);
   printMessage();
   hapticRate1 = 0;
   hapticRate2 = 0;
   setHaptics();
   dataSendTimer = 0;
+  trialActive = 0;
+  userLED_ON();
+  userLED_ON();
+  beepX(500);
+  userLED_OFF();
+  
+
 }
 
 void vibration1On(){

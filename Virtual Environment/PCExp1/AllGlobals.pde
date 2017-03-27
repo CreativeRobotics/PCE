@@ -1,6 +1,7 @@
 //all global variables
 boolean MOUSE_TEST_MODE = false;
 int practiceMode = 4; //free practice
+boolean animateTrials = true;
 /*Practice modes:
 0 = no practice
 1 = practice with static object
@@ -44,7 +45,7 @@ long lastStepStart = 0;
 long lastStepTime = 0;
 boolean trialActive = false;
 
-
+long incrimentalTime = 0;
 
 long elapsedTrialTime =0;
 long startTime = 0;
@@ -96,6 +97,9 @@ int serialALinesReceived  =0;
 Textlabel serialTextB;
 int portBIndex = 0;
 int serialBLinesReceived  =0;
+
+String portA;
+String portB;
 
 static char LINEFEED = 10;
 static char NEWLINE = 10;

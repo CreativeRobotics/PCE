@@ -3,7 +3,7 @@
 void runTrial(){
   //Do everything here
   boolean printTrialDebug = false;
-  
+  incrimentalTime = 0;
   numberOfIterations = trialLengthSeconds * trialResolution;
   millisecondsBetweenSteps = 1000/trialResolution;
   timeoutsA = 0;
@@ -35,7 +35,7 @@ void runTrial(){
     if(logBenchmarks) loopMark1 = System.currentTimeMillis();
     if(trialStep % messageFrequency == 0){
       String message = String.valueOf((numberOfIterations-trialStep)/100);
-      
+      println(message);
       sentATime = System.currentTimeMillis();
       getStateSetMessage(1, message);
       
@@ -49,7 +49,7 @@ void runTrial(){
       getState(2);
     }
     //wait for reply
-    waitForReply(500);
+    waitForReply(9);
     if(logBenchmarks) loopMark2 = System.currentTimeMillis();
     
     if(newDataFromA) {
@@ -77,10 +77,12 @@ void runTrial(){
     setHaptics(1);
     setHaptics(2);
     
+    if(animateTrials) drawGraphics();
+    
     while( System.currentTimeMillis() < lastStepStart+millisecondsBetweenSteps){
       delay(1);
     } //wait here until it is time for the next iteration
-    
+    incrimentalTime += lastStepTime;
     //work out exactly how much time elapsed just in case it was more than the required timestep
     lastStepTime = System.currentTimeMillis() - lastStepStart;
     //finally log the data

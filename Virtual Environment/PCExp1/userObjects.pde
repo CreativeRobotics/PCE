@@ -10,6 +10,7 @@ The checkOverlap function must return true if the lure or the user is overlappin
 
 class userObject 
 {
+  public
   int worldWidth;
   int userWidth; //  width
   int userPosition; // rect xposition

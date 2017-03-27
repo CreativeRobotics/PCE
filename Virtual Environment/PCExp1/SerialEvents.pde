@@ -37,6 +37,7 @@ void sendDataPortB(String dataLine){
 void connectPortA(){
      // get the first available port (use EITHER this OR the specific port code below)
     String portName = portList[portAIndex];
+    portA = portName;
     println(portName);
     // open the serial port
     myPortA = new Serial(this, portName, 115200); 
@@ -49,6 +50,7 @@ void connectPortA(){
 void connectPortB(){
      // get the first available port (use EITHER this OR the specific port code below)
     String portName = portList[portBIndex];
+    portB = portName;
     println(portName);
     // open the serial port
     myPortB = new Serial(this, portName, 115200); 

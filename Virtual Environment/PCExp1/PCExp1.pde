@@ -29,12 +29,12 @@ void setup()
   envStart = (width/2) - (envWidth/2); //The distance from the screen edge that tne environment starts
   envYPos = 500; //environment Y Position onscreen
   //Arguments for user constructor: user width,  user starting position,  Y offset on screen for display, lure offset, lure width, environment width, environment x position onscreen for display
-  userA = new userObject(4, userAPos, -20, 150, 4, envWidth, envStart); //create user A, lure and lure offset
+  userA = new userObject(4, userAPos, -20, 50, 4, envWidth, envStart); //create user A, lure and lure offset
   userA.setHue(userAHue);//set the colour for this user
   userA.setBrightness(userBrightness, lureBrightness, staticBrightness);//set the brightness settings for this users display elements
   userA.setStaticPos(150, 4);//set the position of the static object. Arguments: Position and object width
   
-  userB = new userObject(4, userBPos, 20, 150, 4, envWidth, envStart); //create user B, lure and lure offset
+  userB = new userObject(4, userBPos, 20, 50, 4, envWidth, envStart); //create user B, lure and lure offset
   userB.setHue(userBHue);//set the colour for this user
   userB.setBrightness(userBrightness, lureBrightness, staticBrightness);//set the brightness settings for this users display elements
   userB.setStaticPos(450, 4); //set the position of the static object
@@ -89,6 +89,7 @@ void draw()
     startLogs();
     sendStartTrial(1, "Starting");
     sendStartTrial(2, "Starting");
+    delay(500);
     //thread("runTrial");
     runTrial();
     stopLogs();

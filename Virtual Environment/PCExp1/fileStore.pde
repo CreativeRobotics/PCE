@@ -3,9 +3,34 @@ int boolToInt(boolean b) {
 }
 void writeFileHeader(){
   if(logCombinedOpen == true){
+    //First write a few parameters
+    LogFileCombined.print("Agent A world width = "+userA.worldWidth);
+    LogFileCombined.print(" Agent A width = "+userA.userWidth);
+    LogFileCombined.print(" Agent A starting position = "+userA.userPosition);
+    LogFileCombined.print(" Agent A lure offset = "+userA.lureOffset);
+    LogFileCombined.print(" Agent A lure width = "+userA.lureWidth);
+    LogFileCombined.print(" Agent A static object position = "+userA.staticPos);
+    LogFileCombined.print(" Agent A static object width = "+userA.staticWidth);
+    LogFileCombined.print(" Agent B world width = "+userB.worldWidth);
+    LogFileCombined.print(" Agent B width = "+userB.userWidth);
+    LogFileCombined.print(" Agent B starting position = "+userB.userPosition);
+    LogFileCombined.print(" Agent B lure offset = "+userB.lureOffset);
+    LogFileCombined.print(" Agent B lure width = "+userB.lureWidth);
+    LogFileCombined.print(" Agent B static object position = "+userB.staticPos);
+    LogFileCombined.print(" Agent B static object width = "+userB.staticWidth);
+    
+    
+    LogFileCombined.print(" Trial Length = "+trialLengthSeconds);
+    LogFileCombined.print(" Trial steps per second = "+trialResolution);
+    
+    LogFileCombined.println(" Port A name = "+portA);
+    LogFileCombined.println(" Port B name = "+portB);
+    
+    
+    
     LogFileCombined.print("Step" + ',');
     LogFileCombined.print("System Time" + ',');
-    //LogFileCombined.print(String.valueOf(dataStoreTime) + ',');
+    LogFileCombined.print("Incrimental Time" + ',');
     LogFileCombined.print("Target step time" + ',');
     LogFileCombined.print("Last step time" + ',');
     LogFileCombined.print("UserA-Static" + ',');
@@ -46,9 +71,10 @@ void logTrialData(){
 
   
   if(logCombinedOpen == true){
+    
     LogFileCombined.print(String.valueOf(trialStep) + ',');
     LogFileCombined.print(String.valueOf(System.currentTimeMillis()) + ',');
-    //LogFileCombined.print(String.valueOf(dataStoreTime) + ',');
+    LogFileCombined.print(String.valueOf(incrimentalTime) + ',');
     LogFileCombined.print(String.valueOf(millisecondsBetweenSteps) + ',');
     LogFileCombined.print(String.valueOf(lastStepTime) + ',');
     LogFileCombined.print(String.valueOf(boolToInt(userATouchingStatic)) + ',');

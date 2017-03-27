@@ -57,14 +57,16 @@ void setupCommandButtons(){
   
   int fSize = 15;
      
-  /*cp5.addButton("ResetTimer")
+    cp5.addToggle("animation")
      .setBroadcast(false)
-     .setValue(0)
-     .setPosition(centreStart, vPos)
-     .setSize(buttonW, buttonH)     
+     .setPosition(10, 200)
+     .setSize(100,30)
+     .setValue(true)
+     .setMode(ControlP5.DEFAULT)
+     .setLabel("Toggle Animation") 
+     .setLabelVisible(true)  
      .setBroadcast(true)
      ;
-  vPos += vSpace;*/
   cp5.addButton("NoPractice")
      .setBroadcast(false)
      .setValue(0)
@@ -271,4 +273,10 @@ public void NoPractice(int theValue){
   setHaptics(1);
   setHaptics(2);
   //println("NOT");
+}
+
+public void animation(boolean theValue){
+  animateTrials = !animateTrials;
+  if(animateTrials) println("ON");
+  else println("OFF");
 }
