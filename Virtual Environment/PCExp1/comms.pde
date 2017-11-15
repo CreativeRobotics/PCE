@@ -83,6 +83,53 @@ void sendEndTrial(int unitNo, String lcdMessage){
 }
 //=========================================================================
 
+//Send ... LED ON, LED OFF, Beep ON, Beep OFF.
+//#define LED_ON                    'L'
+//#define LED_OFF                    'l'
+//#define BEEP_ON                    'B'
+//#define BEEP_OFF                  'b'
+void sendLedOn(int unitNo){
+  if(unitNo < 1 || unitNo > 2)  return;
+  String message = 'L' + String.valueOf(NEWLINE);
+  if(unitNo == 1)  sendDataPortA(message);
+  else             sendDataPortB(message);
+}
+//=========================================================================
+void sendLedOff(int unitNo){
+  if(unitNo < 1 || unitNo > 2)  return;
+  String message = 'l' + String.valueOf(NEWLINE);
+  if(unitNo == 1)  sendDataPortA(message);
+  else             sendDataPortB(message);
+}
+//=========================================================================
+void sendBeepOn(int unitNo){
+  if(unitNo < 1 || unitNo > 2)  return;
+  String message = 'B' + String.valueOf(NEWLINE);
+  if(unitNo == 1)  sendDataPortA(message);
+  else             sendDataPortB(message);
+}
+//=========================================================================
+void sendBeepOff(int unitNo){
+  if(unitNo < 1 || unitNo > 2)  return;
+  String message = 'b' + String.valueOf(NEWLINE);
+  if(unitNo == 1)  sendDataPortA(message);
+  else             sendDataPortB(message);
+}
+//=========================================================================
+
+void ledBeepOn(){
+  sendLedOn(1);
+  sendLedOn(2);
+  sendBeepOn(1);
+  sendBeepOn(2);
+}
+void ledBeepOff(){
+  sendLedOff(1);
+  sendLedOff(2);
+  sendBeepOff(1);
+  sendBeepOff(2);
+}
+
 void setHaptics(int unitNo){
   if(unitNo == 1) {
     String message = 'h' + String.valueOf(userA.hapticStrength1) + ',' + String.valueOf(userA.hapticStrength2) + String.valueOf(NEWLINE);

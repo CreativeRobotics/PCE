@@ -87,9 +87,7 @@ void draw()
     //Any keyboard input now will hald the trial
     noLoop();
     startLogs();
-    sendStartTrial(1, "Starting");
-    sendStartTrial(2, "Starting");
-    delay(500);
+    //delay(500);
     //thread("runTrial");
     runTrial();
     stopLogs();

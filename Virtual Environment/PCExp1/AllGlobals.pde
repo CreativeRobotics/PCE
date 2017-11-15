@@ -30,12 +30,8 @@ long loopMark4 = 0;
 long loopEndMark = 0;
 long endOfThisStep = 0;
 
-
-int trialLengthSeconds = 60; //the length of the trial in seconds
-int trialResolution = 100; //The number of updates per second - the maximum is approximatly 500
-
-int messageFrequency = 100; //how many steps before updating the users screen message - If trialResolution is 100 steps per second then setting messageFrequency to 100 will update the screen once per second
-
+//Timing for the trial
+long trialStartTime;
 //These are all set when the applications runs.
 int numberOfIterations = 100;
 long millisecondsBetweenSteps = 10;

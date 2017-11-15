@@ -5,6 +5,127 @@ setupConnectButtons();
 //setupSerialDisplay();
 setupCommandButtons();
 //setupPracticeButtons();
+setupManual1();
+setupManual2();
+setupTiming();
+}
+
+
+void setupTiming(){
+  int xps = 300;
+  cp5.addTextfield("TrialLength")
+       .setPosition(xps, height-60)
+       .setSize(100,30)
+       .setFont(createFont("Arial",16))
+       .setFocus(true)
+       .setText(String.valueOf(trialLengthMillis))
+       .setAutoClear(false)
+       ;
+    
+    xps+=200;
+    
+    cp5.addTextfield("beepInterval")
+       .setPosition(xps, height-60)
+       .setSize(100,30)
+       .setFont(createFont("Arial",16))
+       .setFocus(true)
+       .setText(String.valueOf(middleIndicatorTime))
+       .setAutoClear(false)
+       ;
+       
+    xps+=200;
+    
+    cp5.addTextfield("beepLength")
+     .setPosition(xps, height-60)
+     .setSize(100,30)
+     .setFont(createFont("Arial",16))
+     .setFocus(true)
+     .setText(String.valueOf(middleIndicatorLength) )
+     .setAutoClear(false)
+     ; 
+}
+
+
+void updateTimingData(){
+  
+    String textValue = cp5.get(Textfield.class, "beepInterval").getText();
+    middleIndicatorTime = Integer.parseInt(textValue);
+    
+    String textValue2 = cp5.get(Textfield.class, "beepLength").getText();
+    middleIndicatorLength = Integer.parseInt(textValue2);
+    
+    
+    String textValue3 = cp5.get(Textfield.class, "TrialLength").getText();
+    trialLengthMillis = (long)Integer.parseInt(textValue3);
+    
+    trialLengthSeconds = (int)trialLengthMillis / 1000;
+}
+
+
+void setupManual1(){
+ //setup buttons to start and stop beeps and led's
+ cp5.addToggle("LED1")
+     .setBroadcast(false)
+     .setPosition(startAX+230, startAY)
+     .setSize(50,30)
+     .setValue(false)
+     .setMode(ControlP5.DEFAULT)
+     .setLabel("LED") 
+     .setLabelVisible(true)  
+     .setBroadcast(true)
+     ;
+  cp5.addToggle("Beep1")
+     .setBroadcast(false)
+     .setPosition(startAX+230, startAY+50)
+     .setSize(50,30)
+     .setValue(false)
+     .setMode(ControlP5.DEFAULT)
+     .setLabel("Beep") 
+     .setLabelVisible(true)  
+     .setBroadcast(true)
+     ;
+  
+}
+void LED1(boolean theFlag){
+  if(theFlag == true) sendLedOn(1);
+  else                sendLedOff(1);
+}
+void Beep1(boolean theFlag){
+  if(theFlag == true) sendBeepOn(1);
+  else                sendBeepOff(1);
+}
+
+void setupManual2(){
+ //setup buttons to start and stop beeps and led's
+ cp5.addToggle("LED2")
+     .setBroadcast(false)
+     .setPosition(startBX-110, startBY)
+     .setSize(50,30)
+     .setValue(false)
+     .setMode(ControlP5.DEFAULT)
+     .setLabel("LED") 
+     .setLabelVisible(true)  
+     .setBroadcast(true)
+     ;
+  cp5.addToggle("Beep2")
+     .setBroadcast(false)
+     .setPosition(startBX-110, startBY+50)
+     .setSize(50,30)
+     .setValue(false)
+     .setMode(ControlP5.DEFAULT)
+     .setLabel("Beep") 
+     .setLabelVisible(true)  
+     .setBroadcast(true)
+     ;
+  
+}
+void LED2(boolean theFlag){
+  if(theFlag == true) sendLedOn(2);
+  else                sendLedOff(2);
+}
+void Beep2(boolean theFlag){
+  if(theFlag == true) sendBeepOn(2);
+  else                sendBeepOff(2);
 }
 
 void setupLog(){

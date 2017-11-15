@@ -3,6 +3,9 @@
 void runTrial(){
   //Do everything here
   boolean printTrialDebug = false;
+  //get the trial beep data from the UI
+  updateTimingData();
+  
   incrimentalTime = 0;
   numberOfIterations = trialLengthSeconds * trialResolution;
   millisecondsBetweenSteps = 1000/trialResolution;
@@ -19,7 +22,12 @@ void runTrial(){
   
   userA.setStaticPos(150, 4);
   userB.setStaticPos(450, 4);
-  
+  trialStartTime = System.currentTimeMillis();
+  sendStartTrial(1, "Starting");
+  sendStartTrial(2, "Starting");
+  //send a beep and flash command
+  ledBeepOn();
+  startIndicatorOn = true;
   for(int step = 0; step < numberOfIterations; step++){
     
     if(logBenchmarks) loopStartMark = System.currentTimeMillis();
@@ -33,6 +41,23 @@ void runTrial(){
       return;
     }
     if(logBenchmarks) loopMark1 = System.currentTimeMillis();
+    
+    //Send any light and beep commands
+    //turn off it starting the trial and beep has run out of time
+    if(startIndicatorOn == true && System.currentTimeMillis() >= (trialStartTime + startindicatorLength) ){
+      ledBeepOff();
+      startIndicatorOn = false;
+    }
+    //beep/flash ON if you reach the middle marker and have not completed it
+    else if(middleIndicatorOn == false && middleIndicatorDone == false && System.currentTimeMillis() >= (trialStartTime + middleIndicatorTime) ){
+      ledBeepOn();
+      middleIndicatorOn = true;
+    }
+    else if(middleIndicatorOn == true && System.currentTimeMillis() >= (trialStartTime + middleIndicatorTime + middleIndicatorLength) ){
+      ledBeepOff();
+      middleIndicatorDone = true;
+      middleIndicatorOn = false;
+    }
     if(trialStep % messageFrequency == 0){
       String message = String.valueOf((numberOfIterations-trialStep)/100);
       println(message);
@@ -91,8 +116,20 @@ void runTrial(){
     logTrialData();
     trialStep++;
   }
+  //beep and flash
+  
   haltTrial();
+  
   trialActive = false;
+  
+  ledBeepOn();
+  delay((int)endIndicatorLength);
+  ledBeepOff();
+  ledBeepOff();
+  
+  startIndicatorOn = false;
+  middleIndicatorOn = false;
+  middleIndicatorDone = false;
 }
 
 void waitForReply(int timeout){
