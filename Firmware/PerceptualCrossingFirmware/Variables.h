@@ -33,3 +33,11 @@ uint16_t hapticRate1 = 0, hapticRate2 = 0;
 uint8_t nRows = 2;      //number of rows on LCD
 uint8_t nColumns = 16;  //number of columns
 char LCDText[33];
+
+
+unsigned long beepStart = 0, beepEnd = 0;
+unsigned long flashStart = 0, flashEnd = 0;
+bool flashActive = 0;
+
+unsigned long beepLengthCommand = 0;
+unsigned long flashLengthCommand = 0;

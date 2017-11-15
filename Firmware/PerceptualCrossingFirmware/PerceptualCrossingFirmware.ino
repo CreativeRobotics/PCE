@@ -17,13 +17,14 @@ void setup() {
   //haptic1.initialise(H1PWMPIN, H1ENABLE);
   //haptic2.initialise(H2PWMPIN, H2ENABLE);
 
-  beepX(500);
+  beepON();
   userLED_ON();
   //USB.println("Started . . .");
   delay(1000);
   
   sendACK();
   userLED_OFF();
+	beepOFF();
   startTrackerball();
   //setVib1Strength(0);
 }
@@ -55,10 +56,18 @@ void updateSystem(){
   //haptic1.update();
   //haptic2.update();
   buttonState = checkSwitch();
-  updateBeep();
-  if(buttonState && trialActive) userLED_ON();
+  //updateBeepFlash();
+	if(!flashActive) updateButton(); //only update the LED if a flash event is NOT running
+
+}
+void updateButton(){
+	if(buttonState && trialActive) userLED_ON();
   else if(!buttonState && trialActive)  userLED_OFF();
-  
+}
+
+void updateBeepFlash(){
+  updateBeep();
+	updateFlash();
 }
 
 void waitFor(unsigned long delayTime){
@@ -67,16 +76,16 @@ void waitFor(unsigned long delayTime){
 }
 
 void startTrial(){
-  userLED_ON();
-  beepX(500);
-  userLED_OFF();
+  //userLED_ON();
+  //beepX(500);
+  //userLED_OFF();
   trialActive = 1;
   hapticRate1 = 0;
   hapticRate2 = 0;
   dataSendTimer = 0;
   setHaptics();
   startTrackerball();
-  beep(500);
+  //beep(500);
   printMessage();
 }
 
@@ -88,13 +97,14 @@ void stopTrial(){
   setHaptics();
   dataSendTimer = 0;
   trialActive = 0;
-  userLED_ON();
-  userLED_ON();
-  beepX(500);
-  userLED_OFF();
+  //userLED_ON();
+  //userLED_ON();
+  //beepX(500);
+  //userLED_OFF();
   
 
 }
+
 
 void vibration1On(){
   digitalWrite(H1ENABLE, 1);

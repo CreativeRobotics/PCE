@@ -23,3 +23,16 @@ void userLED_OFF(){
   LEDBrightness = 0;
 }
 
+void flash(unsigned long duration){
+	userLED_ON();
+	flashActive = 1;
+	flashStart = millis();
+  flashEnd = flashStart+ duration;
+}
+
+void updateFlash(){
+  if(millis() > flashEnd){
+		userLED_OFF();
+		flashActive = 0;
+	}
+}

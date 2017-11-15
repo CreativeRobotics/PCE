@@ -7,7 +7,10 @@
 #define SET_HAPTICS               'h'
 #define SET_HAPTICS_SET_MESSAGE   'H'
 #define QUERY_DEVICE              '?'
-
+#define LED_ON										'L'
+#define LED_OFF										'l'
+#define BEEP_ON										'B'
+#define BEEP_OFF									'b'
 
 bool refreshSerial(){
   if( checkSerial() ){
@@ -89,6 +92,25 @@ void parseSerial(){
       //printData2();
       
       break;
+			
+		case LED_ON: //manually set the LED and set flashActive = 1 to override the button
+			userLED_ON();
+			flashActive = 1;
+      break;
+			
+		case LED_OFF: //manually set the LED and set flashActive = 0 to give control back to the button
+			userLED_OFF();
+			flashActive = 0;
+      break;
+			
+		case BEEP_ON:
+			beepON();
+      break;
+			
+		case BEEP_OFF:
+			beepOFF();
+      break;
+			
     case QUERY_DEVICE:
     
       //USB.println("Query cmd");
